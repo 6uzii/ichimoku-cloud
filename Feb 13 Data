@@ -1,9 +1,17 @@
+#getting real world data
+
 import yfinance as yf
 
 data = intraday_data = yf.download(tickers="AAPL",
                             period="5d",
                             interval="1m",
                             auto_adjust=True)
+                            
+# intraday_data.head() will give the table
+# data.High for the high will give the high
+# data.Low for the low will give the low
+
+# rio's data
 
 high_negative_26 = data.High.rolling(26).max().shift(-26)
 low_negative_26 = data.High.rolling(26).min().shift(-26)
