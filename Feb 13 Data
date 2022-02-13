@@ -1,0 +1,44 @@
+import yfinance as yf
+
+data = intraday_data = yf.download(tickers="AAPL",
+                            period="5d",
+                            interval="1m",
+                            auto_adjust=True)
+
+high_negative_26 = data.High.rolling(26).max().shift(-26)
+low_negative_26 = data.High.rolling(26).min().shift(-26)
+high1 = data.High.rolling(1).max()
+low1 = data.High.rolling(1).min()
+high9 = data.High.rolling(9).max()
+low9 = data.High.rolling(9).min()
+high26 = data.High.rolling(26).max()
+low26 = data.High.rolling(26).min()
+high52 = data.High.rolling(52).max()
+low52 = data.High.rolling(52).min()
+
+data = data.iloc[26:]
+tenkan_sen = (high9+low9)/2
+kijun_sen = (high26+low26)/2
+senkou_A = ((data.tenkan_sen+data.kijun_sen)/2).shift(26)
+senkou_B = ((high52+low52)/2).shift(26)
+chikou = data.Close.shift(-26)
+
+
+if tenkan_sen >= kijun_sen:
+    {
+        print("tenkan_sen is TRUE!")
+    }
+if senkou_A >= senkou_B:
+    {
+        print("Ichimoku cloud is true!")
+    }
+if chikou >= high_negative_26:
+    {
+        print("Chikou is true!")
+    }
+if high1 >= senkou_A:
+    {
+        print("One day high is true!")
+    }
+
+
